@@ -79,13 +79,37 @@ The results in terms of dataset size and visual representation are:
 
 #### Data Preprocessing. 
 
-After experimenting with running against grayscale images,  could not really appreciate a difference in the outcome of the model, so I finally resorted to stick with the RGB format. This made the pre-processing actually fairly simple, consisting in just a normalization of the images to transform them in the \[-128,128\] range.
+After experimenting with running against grayscale images, I could not really appreciate a difference in the outcome of the model, so I finally resorted to stick with the RGB format. This made the pre-processing actually fairly simple, consisting in just a normalization of the images to transform them in the \[-128,128\] range.
 
 #### Network Architecture. 
 
+The starting point for this project was the LeNet architecture and its implementation provided as part of the Udacity [lab](https://github.com/udacity/CarND-LeNet-Lab/blob/master/LeNet-Lab-Solution.ipynb).
+
+It was interesting to me to verify how without changing the fundamental architecture, but manipulating the hyperparameters (number of features for each layer, number of epochs...) was it possible to already reach an accuracy of more than 91%.
+
+In order to reach higher values, but also to experiment with different architectures, I started to modify the original design and experiment with different approaches. While doing research on the subject, a good reference I found was [this] project of a former udacity student, that pushed me towards the idea of increasing the number of "full" layers.
+
+My final design can be summarized as it follows:
 
 
-
+| Layer         		|     Description	        					|      Output|
+|:---------------------:|:---------------------------------------------:|:---------------------:|
+|Input    | Original Image | 32x32x3 RGB Image |
+|Pre-processing    | Normalize Data | 32x32x3 Normalized RGB Image |
+|Convolution    | 5x5, Depth 6  | 28x28x6 |
+|Convolution    | 5x5, Depth 12  | 24x24x12 |
+|Dropout    | 50 %  | 24x24x12 |
+|Convolution    | 5x5, Depth 20  | 20x20x20 |
+|Convolution    | 5x5, Depth 30  | 16x16x30 |
+|Dropout    | 50 %  | 16x16x30 |
+|Convolution    | 5x5, Depth 45  | 12x12x45|
+|Convolution    | 50 %  | 8x8x70 |
+|Dropout    | 50 %  | 8x8x70 |
+|Flatten    | Transition from convolutional to dense  | 4480 |
+|Dense    | Depth 400  | 400 |
+|Dense    | Depth 100  | 100 |
+|Dropout    | 50 %  | 100 |
+|Dense    | Depth 43  | 43 (Final classifier) |
 
 
 I used the pandas library to calculate summary statistics of the traffic
