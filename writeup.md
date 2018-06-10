@@ -1,46 +1,77 @@
 # **Traffic Sign Recognition** 
 
-## Writeup
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Build a Traffic Sign Recognition Project**
-
-The goals / steps of this project are the following:
-* Load the data set (see below for links to the project data set)
-* Explore, summarize and visualize the data set
-* Design, train and test a model architecture
-* Use the model to make predictions on new images
-* Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
-
+## Project Writeup
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+[image1]: ./figures/nominal_dataset.jpg "Nominal Dataset"
+[image2]: ./figures/nominal_dataset_histogram.jpg "Nominal Dataset Histogram"
+[image3]: ./figures/augmented_dataset.jpg "Nominal Dataset"
+[image4]: ./figures/augmented_dataset_histogram.jpg "Nominal Dataset Histogram"
 
 ---
-### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
+#### Step 1. Basic summary, exploratory visualization and analysis of the of the initial data set. 
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+The original dataset for this project is the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset).
 
-### Data Set Summary & Exploration
+The dataset provides three pickle files, each of them containing a dictionary with 4 key/value pairs:
 
-#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+- `'features'` is a 4D array containing raw pixel data of the traffic sign images, (num examples, width, height, channels).
+- `'labels'` is a 1D array containing the label/class id of the traffic sign. The file `signnames.csv` contains id -> name mappings for each id.
+- `'sizes'` is a list containing tuples, (width, height) representing the original width and height the image.
+- `'coords'` is a list containing tuples, (x1, y1, x2, y2) representing coordinates of a bounding box around the sign in the image.
+
+The three datasets are separated for Training, Validation and Test.
+Using some simple numpy libraries, the analysis of the data showed:
+
+ 
+| Original Dataset Feature         		|     Value	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|Number of training examples    |34799|
+|Number of validation examples   |4410|
+|Number of testing examples   |12630|
+|Image data shape   |(32, 32, 3)||
+|Number of classes   |43|
+
+
+Afterwards, I looked at an example of each picture (taking the first occurrence of each one of the 43 classess) and their distribution:
+
+![alt text][image1]
+
+![alt text][image2]
+
+
+The fundamental findings for me, after this, were:
+
+1. The fact that the dataset is significantly unbalanced, with some signs more represented than the others (there are 2010 instances of the 'Speed Limit (50 km/h)' sign and only 180 for the 'Speed Limit (20 km/h)' one.
+2. Some of the images seem to be very dark.
+
+This led me to try to artificially "augment" the dataset. 
+
+#### Step 2. Data set augmentation.
+
+Two types of modification were applied to the original images in the dataset:
+
+1. A random rotation in the range \[-20;20 \] deg
+2. A random increment in intensity of the image, multiplying some of them for a facto up  to 1.8
+
+In terms of size, my target was to create a dataset evenly distributed, with every sign as represented as the oringinal most common one, so for every class I have generated a number of image equal to the difference between their original occurrence and 2010 (again, the num. of instances of the most common sign).
+
+The code I used is attached as part of the python notebook; the augmented dataset in output was saved as an additional pikle file with a dictionary containing only the  `'features'` and  `'labels'` key-value pairs.
+The results in terms of dataset size and visual representation are:
+
+
+| Augmented Dataset Feature         		|     Value	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|Number of training examples    |86388|
+
+
+![alt text][image3]
+
+![alt text][image4]
+
+
 
 I used the pandas library to calculate summary statistics of the traffic
 signs data set:
