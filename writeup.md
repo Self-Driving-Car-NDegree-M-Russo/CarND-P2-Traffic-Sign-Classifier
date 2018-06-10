@@ -44,7 +44,7 @@ Afterwards, I looked at an example of each picture (taking the first occurrence 
 
 The fundamental findings for me, after this, were:
 
-1. The fact that the dataset is significantly unbalanced, with some signs more represented than the others (there are 2010 instances of the 'Speed Limit (50 km/h)' sign and only 180 for the 'Speed Limit (20 km/h)' one.
+1. The dataset is significantly unbalanced, with some signs more represented than the others (there are 2010 instances of the 'Speed Limit (50 km/h)' sign and only 180 for the 'Speed Limit (20 km/h)' one.
 2. Some of the images seem to be very dark.
 
 This led me to try to artificially "augment" the dataset. 
