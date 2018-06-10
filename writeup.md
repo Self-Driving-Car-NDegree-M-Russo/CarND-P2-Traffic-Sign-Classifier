@@ -6,12 +6,13 @@
 
 [image1]: ./figures/nominal_dataset.jpg "Nominal Dataset"
 [image2]: ./figures/nominal_dataset_histogram.jpg "Nominal Dataset Histogram"
-[image3]: ./figures/augmented_dataset.jpg "Nominal Dataset"
-[image4]: ./figures/augmented_dataset_histogram.jpg "Nominal Dataset Histogram"
+[image3]: ./figures/augmented_dataset.jpg "Augmented Dataset"
+[image4]: ./figures/augmented_dataset_histogram.jpg "Augmented Dataset Histogram"
 
 ---
+## Data Analysis
 
-#### Step 1. Basic summary, exploratory visualization and analysis of the of the initial data set. 
+#### Basic summary, exploratory visualization and analysis of the of the initial data set. 
 
 The original dataset for this project is the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset).
 
@@ -50,7 +51,7 @@ The fundamental findings for me, after this, were:
 
 This led me to try to artificially "augment" the dataset. 
 
-#### Step 2. Data set augmentation.
+#### Data set augmentation.
 
 Two types of modification were applied to the original images in the dataset:
 
@@ -71,6 +72,19 @@ The results in terms of dataset size and visual representation are:
 ![alt text][image3]
 
 ![alt text][image4]
+
+---
+
+## Network Architecture and Design
+
+#### Data Preprocessing. 
+
+After experimenting with running against grayscale images,  could not really appreciate a difference in the outcome of the model, so I finally resorted to stick with the RGB format. This made the pre-processing actually fairly simple, consisting in just a normalization of the images to transform them in the \[-128,128\] range.
+
+#### Network Architecture. 
+
+
+
 
 
 
