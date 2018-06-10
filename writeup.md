@@ -87,9 +87,10 @@ The starting point for this project was the LeNet architecture and its implement
 
 It was interesting to me to verify how without changing the fundamental architecture, but manipulating the hyperparameters (number of features for each layer, number of epochs...) was it possible to already reach an accuracy of more than 91%.
 
-In order to reach higher values, but also to experiment with different architectures, I started to modify the original design and experiment with different approaches. While doing research on the subject, a good reference I found was [this] project of a former udacity student, that pushed me towards the idea of increasing the number of "full" layers.
+In order to reach higher values, but also to experiment with different architectures, I started to modify the original design and experiment with different approaches. While doing research on the subject, a good reference I found was [this](https://github.com/ericlavigne/CarND-Traffic-Sign-Classifier) project of a former udacity student, that pushed me towards the idea of increasing the number of "full" layers.
+I tried different solution in this sense, and one of the things that I found was the tendedncy of the model towards some degree of overfitting, reaching accuracies of over 97% in training, but remaining consistently lower in testing. In order to limit the behavior, I have implemented several layers of dropout.
 
-My final design can be summarized as it follows:
+My final design can be described as it follows:
 
 
 | Layer         		|     Description	        					|      Output|
@@ -103,7 +104,7 @@ My final design can be summarized as it follows:
 |Convolution    | 5x5, Depth 30  | 16x16x30 |
 |Dropout    | 50 %  | 16x16x30 |
 |Convolution    | 5x5, Depth 45  | 12x12x45|
-|Convolution    | 50 %  | 8x8x70 |
+|Convolution    | 5x5, Depth 70  | 8x8x70 |
 |Dropout    | 50 %  | 8x8x70 |
 |Flatten    | Transition from convolutional to dense  | 4480 |
 |Dense    | Depth 400  | 400 |
@@ -111,6 +112,12 @@ My final design can be summarized as it follows:
 |Dropout    | 50 %  | 100 |
 |Dense    | Depth 43  | 43 (Final classifier) |
 
+Furtermore:
+
+* All the activation functions are RELUs.
+* I used an Adam optimizer, with a contnt learning rate of 0.001. I have experimenting trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architecture I have tried, but ultimately it didn't seem to affect the final design, so I left it constant.
+
+Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of, in a time 
 
 I used the pandas library to calculate summary statistics of the traffic
 signs data set:
