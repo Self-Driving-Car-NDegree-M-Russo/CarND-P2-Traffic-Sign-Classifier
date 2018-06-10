@@ -35,6 +35,7 @@ Using some simple numpy libraries, the analysis of the data showed:
 |Number of classes   |43|
 
 
+
 Afterwards, I looked at an example of each picture (taking the first occurrence of each one of the 43 classess) and their distribution:
 
 ![alt text][image1]
