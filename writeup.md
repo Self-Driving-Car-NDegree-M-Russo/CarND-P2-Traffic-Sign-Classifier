@@ -8,6 +8,7 @@
 [image2]: ./figures/nominal_dataset_histogram.jpg "Nominal Dataset Histogram"
 [image3]: ./figures/augmented_dataset.jpg "Augmented Dataset"
 [image4]: ./figures/augmented_dataset_histogram.jpg "Augmented Dataset Histogram"
+[image5]: ./figures/web_dataset.jpg "Images from the Web"
 
 ---
 ## Data Analysis
@@ -115,89 +116,47 @@ My final design can be described as it follows:
 Furthermore:
 
 * All the activation functions are RELUs.
-* I used an Adam optimizer, with a contnt learning rate of 0.001. I have experimenting trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architecture I have tried, but ultimately it didn't seem to affect the final design, so I left it constant.
+* I used an Adam optimizer, with a constant learning rate of 0.001. I have experimenting trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architecture I have tried, but ultimately it didn't seem to affect the final design, so I left it constant.
+* After trying various combinations, i decided to settle for 20 Epochs. Here too, the compromise was mostly between performances against the test data and overfitting of the training data.
 
-Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of, in a time 
+Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of 93.4%, in a time of almost 12 minutes.
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+While satusfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96%), whcih means that probably steps can still be taken to improve the resiliency of the design.
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+---
 
-#### 2. Include an exploratory visualization of the dataset.
+## Evaluation of the model against new images
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+6 new images of German traffic signs have been collected from the internet, with different degrees of resolution and clarity:
 
-![alt text][image1]
-
-### Design and Test a Model Architecture
-
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
-
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+![alt text][image5]
 
 
-#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+These images have then be gven in input to the model, given as a result a global accuracy score of 83% (5 images have been identified out of 6).
 
-My final model consisted of the following layers:
+For the _non_ identified images, the top 5 softmax probablities identified by the model were:
 
-| Layer         		|     Description	        					| 
+| Signal         		|     Probablity	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
+|Speed limit (30 Km/h)   | *Real Signal* |
+|Right-of-way at the next intersection   | 0.96 |
+|Vehicles over 3.5 metric tons prohibited   | 0.019 |
+|Speed limit (50km/h)  | 0.015 |
+|Speed limit (30km/h)   | 0.002 |
+|No entry   | 0.001 |
+
+| Signal         		|     Probablity	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|Speed limit (30 Km/h)   | *Real Signal* |
+|Right-of-way at the next intersection   | 0.96 |
+|Vehicles over 3.5 metric tons prohibited   | 0.019 |
+|Speed limit (50km/h)  | 0.015 |
+|Speed limit (30km/h)   | 0.002 |
+|No entry   | 0.001 |
 
 
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+---
 
-To train the model, I used an ....
-
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
-
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
 
 ### Test a Model on New Images
 
