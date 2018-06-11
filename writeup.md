@@ -116,7 +116,7 @@ My final design can be described as it follows:
 Furthermore:
 
 * All the activation functions are RELUs.
-* I used an Adam optimizer, with a constant learning rate of 0.001. I have experimented trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architectures I have tried, but ultimately it didn't seem to affect the final design, so I ultimately left it constant.
+* I used an Adam optimizer, with a constant learning rate of 0.001. I have experimented trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architectures I have tried, but ultimately it didn't seem to affect the final design, so I finally left it constant.
 * After trying various combinations, I decided to settle for 20 Epochs. Here too, the compromise was mostly between performances against the test data and overfitting of the training data.
 
 Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of 93.9%, in a time of almost 12 minutes.
