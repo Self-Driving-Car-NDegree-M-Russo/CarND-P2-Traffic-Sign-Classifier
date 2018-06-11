@@ -86,7 +86,7 @@ After experimenting with running against grayscale images, I could not really ap
 
 The starting point for this project was the LeNet architecture and its implementation provided as part of the Udacity [lab](https://github.com/udacity/CarND-LeNet-Lab/blob/master/LeNet-Lab-Solution.ipynb).
 
-It was interesting to me to verify how without changing the fundamental architecture, but manipulating the hyperparameters (number of features for each layer, number of epochs...) it was possible to already reach an accuracy of more than 91%.
+It was interesting for me to verify how without changing the fundamental architecture, but manipulating the hyperparameters (number of features for each layer, number of epochs...) it was possible to already reach an accuracy of more than 91%.
 
 In order to reach higher values, but also to experiment with different architectures, I started to modify the original design and try different approaches. While doing research on the subject, a good reference I found was [this](https://github.com/ericlavigne/CarND-Traffic-Sign-Classifier) project of a former Udacity student, that pushed me towards the idea of increasing the number of "full" layers.
 I tried different solutions in this sense, and one of the things that I found was the tendency of the model towards some degree of overfitting, reaching accuracies of over 97% in training, but remaining consistently lower in testing. In order to limit the behavior, I have implemented several layers of dropout.
@@ -121,7 +121,7 @@ Furthermore:
 
 Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of 93.9%, in a time of almost 12 minutes.
 
-While satusfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96% in few runs), whcih means that probably steps can still be taken to improve the resiliency of the design.
+While satusfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96% in few runs), which means that probably steps can still be taken to improve the resiliency of the design.
 
 ---
 
@@ -132,7 +132,7 @@ While satusfactory from a project's perspective, I think it's fair to say that t
 ![alt text][image5]
 
 
-These images have then be gven in input to the model, given as a result a global accuracy score of 66.7% (5 images have been identified out of 6).
+These images have then be gven in input to the model, given as a result a global accuracy score of 66.7% (4 images have been identified out of 6).
 
 For the _non_ identified images, the top 5 softmax probablities identified by the model were:
 
@@ -140,9 +140,11 @@ For the _non_ identified images, the top 5 softmax probablities identified by th
 |:---------------------:|:---------------------------------------------:| 
 |Speed limit (20 Km/h)   | *Real Signal* |
 |General caution   | 0.719 |
+|Traffic Signals | 0.19 |
 |Pedestrians  | 0.002 |
 |Dangerous curve to the right   | 0.002 |
 |Dangerous curve to the left  | 0.001 |
+
 
 | Signal         		|     Probablity	        					| 
 |:---------------------:|:---------------------------------------------:| 
@@ -150,14 +152,12 @@ For the _non_ identified images, the top 5 softmax probablities identified by th
 |Speed limit (20 Km/h)   | 0.99 |
 |No Entry   | 6.8e-04 |
 |Priority road  | 7.3e-05 |
-|Road work   |  7.05e-05,   4.47891471e-05 |
+|Road work   |  7.05e-05 |
 |Dangerous curve to the right   | 4.48e-05 |
 
+It is, I believe, interesting to notice how both the misclassification have to do with the 'Speed limit (20 Km/h)' signal, which was originally the least represented. Also, the kind of image chosen for the 'No Entry' signal makes it probably harder to identify - it is indeed the second in the list, but with a significantly lower probability.
 
-It is, I believe, interesting to notice how both the misclassification have to do with the 'Speed limit (20 Km/h)' signal, which was originally the least represented. Also, the kind of image chosen for the 'No Entry' signal makes it probably harder to identify.
-
-In both cases, I believe that further degrees of refinement on the original dataset would help.
-
+In both cases, I believe that, besides the network itself, further degrees of refinement on the original dataset would also help.
 
 ---
 
@@ -165,6 +165,6 @@ In both cases, I believe that further degrees of refinement on the original data
 
 As a final step in the project I have added a visualization for the first layer of the network, fed with the first image obtained from the web.
 
-I believe it's interesting to notice how at this layers the network seems to "see" moslty changes in contours, with the circular boundaries of the sign getting evidenced, even if this is not yet enough to classify.
+I believe it's interesting to notice how at this layer the network seems to "see" moslty changes in contours, with the circular boundaries of the sign getting evidenced, even if this is not yet enough to classify.
 
 I feel this kind of analysis would prove helpful in eventual refactoring of the proposed architecture. 
