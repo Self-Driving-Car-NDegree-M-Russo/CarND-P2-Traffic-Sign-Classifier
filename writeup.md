@@ -157,7 +157,7 @@ For the _non_ identified images, the top 5 softmax probablities identified by th
 
 It is, I believe, interesting to notice how both the misclassifications have to do with the 'Speed limit (20 Km/h)' signal, which was originally the least represented. Also, the kind of image chosen for the 'No Entry' signal makes it probably harder to identify - it is indeed the second in the list, but with a significantly lower probability.
 
-In both cases, I believe that, besides changing the design the network itself, further degrees of refinement on the original dataset would also help.
+In both cases I believe that, besides changing the design the network itself, further degrees of refinement on the original dataset would also help.
 
 ---
 
@@ -167,7 +167,7 @@ As a final step in the project I have added a visualization for the first layer 
 
 I believe it's interesting to notice how at this layer the network seems to "see" moslty changes in contours, with the circular boundaries of the sign getting evidenced, even if this is not yet enough to classify.
 
-I feel this kind of analysis would prove helpful in eventual refactoring of the proposed architecture. 
+I feel this kind of analysis would prove helpful in an eventual refactoring of the proposed architecture. 
 
 
 ---
