@@ -17,7 +17,7 @@
 
 The original dataset for this project is the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset).
 
-The dataset provides three pickle files, each of them containing a dictionary with 4 key/value pairs:
+The dataset is provided as three pickle files, each of them containing a dictionary with 4 key/value pairs:
 
 - `'features'` is a 4D array containing raw pixel data of the traffic sign images, (num examples, width, height, channels).
 - `'labels'` is a 1D array containing the label/class id of the traffic sign. The file `signnames.csv` contains id -> name mappings for each id.
@@ -57,11 +57,11 @@ This led me to try to artificially "augment" the dataset.
 Two types of modification were applied to the original images in the dataset:
 
 1. A random rotation in the range \[-20;20 \] deg
-2. A random increment in intensity of the image, multiplying some of them for a facto up  to 1.8
+2. A random increment in intensity of the image, multiplying some of them for a factor up  to 1.8
 
 In terms of size, my target was to create a dataset evenly distributed, with every sign as represented as the oringinal most common one, so for every class I have generated a number of image equal to the difference between their original occurrence and 2010 (again, the num. of instances of the most common sign).
 
-The code I used is attached as part of the python notebook; the augmented dataset in output was saved as an additional pikle file with a dictionary containing only the  `'features'` and  `'labels'` key-value pairs.
+The code I used is attached as part of the python notebook; the augmented dataset in output was saved as an additional pickle file with a dictionary containing only the  `'features'` and  `'labels'` key-value pairs.
 The results in terms of dataset size and visual representation are:
 
 
@@ -86,10 +86,10 @@ After experimenting with running against grayscale images, I could not really ap
 
 The starting point for this project was the LeNet architecture and its implementation provided as part of the Udacity [lab](https://github.com/udacity/CarND-LeNet-Lab/blob/master/LeNet-Lab-Solution.ipynb).
 
-It was interesting to me to verify how without changing the fundamental architecture, but manipulating the hyperparameters (number of features for each layer, number of epochs...) was it possible to already reach an accuracy of more than 91%.
+It was interesting to me to verify how without changing the fundamental architecture, but manipulating the hyperparameters (number of features for each layer, number of epochs...) it was possible to already reach an accuracy of more than 91%.
 
-In order to reach higher values, but also to experiment with different architectures, I started to modify the original design and try different approaches. While doing research on the subject, a good reference I found was [this](https://github.com/ericlavigne/CarND-Traffic-Sign-Classifier) project of a former udacity student, that pushed me towards the idea of increasing the number of "full" layers.
-I tried different solution in this sense, and one of the things that I found was the tendedncy of the model towards some degree of overfitting, reaching accuracies of over 97% in training, but remaining consistently lower in testing. In order to limit the behavior, I have implemented several layers of dropout.
+In order to reach higher values, but also to experiment with different architectures, I started to modify the original design and try different approaches. While doing research on the subject, a good reference I found was [this](https://github.com/ericlavigne/CarND-Traffic-Sign-Classifier) project of a former Udacity student, that pushed me towards the idea of increasing the number of "full" layers.
+I tried different solutions in this sense, and one of the things that I found was the tendency of the model towards some degree of overfitting, reaching accuracies of over 97% in training, but remaining consistently lower in testing. In order to limit the behavior, I have implemented several layers of dropout.
 
 My final design can be described as it follows:
 
@@ -116,12 +116,12 @@ My final design can be described as it follows:
 Furthermore:
 
 * All the activation functions are RELUs.
-* I used an Adam optimizer, with a constant learning rate of 0.001. I have experimenting trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architecture I have tried, but ultimately it didn't seem to affect the final design, so I left it constant.
-* After trying various combinations, i decided to settle for 20 Epochs. Here too, the compromise was mostly between performances against the test data and overfitting of the training data.
+* I used an Adam optimizer, with a constant learning rate of 0.001. I have experimented trying to manipulate this, and even implementing an exponential decay (some of the [references](https://papers.nips.cc/paper/7003-the-marginal-value-of-adaptive-gradient-methods-in-machine-learning.pdf) I found while researching seemed to suggest an influence of that on the Adam algorythm also). I could actually find some benefit in that in some of the architectures I have tried, but ultimately it didn't seem to affect the final design, so I ultimately left it constant.
+* After trying various combinations, I decided to settle for 20 Epochs. Here too, the compromise was mostly between performances against the test data and overfitting of the training data.
 
-Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of 93.4%, in a time of almost 12 minutes.
+Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of 93.9%, in a time of almost 12 minutes.
 
-While satusfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96%), whcih means that probably steps can still be taken to improve the resiliency of the design.
+While satusfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96% in few runs), whcih means that probably steps can still be taken to improve the resiliency of the design.
 
 ---
 
@@ -132,76 +132,39 @@ While satusfactory from a project's perspective, I think it's fair to say that t
 ![alt text][image5]
 
 
-These images have then be gven in input to the model, given as a result a global accuracy score of 83% (5 images have been identified out of 6).
+These images have then be gven in input to the model, given as a result a global accuracy score of 66.7% (5 images have been identified out of 6).
 
 For the _non_ identified images, the top 5 softmax probablities identified by the model were:
 
 | Signal         		|     Probablity	        					| 
 |:---------------------:|:---------------------------------------------:| 
-|Speed limit (30 Km/h)   | *Real Signal* |
-|Right-of-way at the next intersection   | 0.96 |
-|Vehicles over 3.5 metric tons prohibited   | 0.019 |
-|Speed limit (50km/h)  | 0.015 |
-|Speed limit (30km/h)   | 0.002 |
-|No entry   | 0.001 |
+|Speed limit (20 Km/h)   | *Real Signal* |
+|General caution   | 0.719 |
+|Pedestrians  | 0.002 |
+|Dangerous curve to the right   | 0.002 |
+|Dangerous curve to the left  | 0.001 |
 
 | Signal         		|     Probablity	        					| 
 |:---------------------:|:---------------------------------------------:| 
-|Speed limit (30 Km/h)   | *Real Signal* |
-|Right-of-way at the next intersection   | 0.96 |
-|Vehicles over 3.5 metric tons prohibited   | 0.019 |
-|Speed limit (50km/h)  | 0.015 |
-|Speed limit (30km/h)   | 0.002 |
-|No entry   | 0.001 |
+|No Entry   | *Real Signal* |
+|Speed limit (20 Km/h)   | 0.99 |
+|No Entry   | 6.8e-04 |
+|Priority road  | 7.3e-05 |
+|Road work   |  7.05e-05,   4.47891471e-05 |
+|Dangerous curve to the right   | 4.48e-05 |
+
+
+It is, I believe, interesting to notice how both the misclassification have to do with the 'Speed limit (20 Km/h)' signal, which was originally the least represented. Also, the kind of image chosen for the 'No Entry' signal makes it probably harder to identify.
+
+In both cases, I believe that further degrees of refinement on the original dataset would help.
 
 
 ---
 
+### Layer Visualization
 
-### Test a Model on New Images
+As a final step in the project I have added a visualization for the first layer of the network, fed with the first image obtained from the web.
 
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+I believe it's interesting to notice how at this layers the network seems to "see" moslty changes in contours, with the circular boundaries of the sign getting evidenced, even if this is not yet enough to classify.
 
-Here are five German traffic signs that I found on the web:
-
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
-
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
-
-Here are the results of the prediction:
-
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
-
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
-
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
+I feel this kind of analysis would prove helpful in eventual refactoring of the proposed architecture. 
