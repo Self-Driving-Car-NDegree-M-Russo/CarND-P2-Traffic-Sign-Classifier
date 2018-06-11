@@ -121,7 +121,7 @@ Furthermore:
 
 Given its "density", the model was trained on an AWS GPU instance, leading to a final accuracy of 93.9%, in a time of almost 12 minutes.
 
-While satusfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96% in few runs), which means that probably steps can still be taken to improve the resiliency of the design.
+While satisfactory from a project's perspective, I think it's fair to say that the accuracy shown against the training dataset is still fairly better (surpassing 96% in few runs), which means that probably steps can still be taken to improve the resiliency of the design.
 
 ---
 
